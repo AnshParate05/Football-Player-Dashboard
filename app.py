@@ -1,7 +1,7 @@
 import streamlit as st
 
 from utils.data_loader import load_clean_data
-from utils.metrics import dashboard_metrics
+from utils.metrics import dashboard_metrics, top_goal_scorers
 from utils.styles import load_css
 from utils.charts import league_chart, position_chart
 
@@ -124,3 +124,15 @@ with right:
         position_chart(filtered_df),
         use_container_width=True
     )
+
+st.divider()
+
+st.subheader("🏆 Top 10 Goal Scorers")
+
+top_players = top_goal_scorers(filtered_df)
+
+st.dataframe(
+    top_players,
+    use_container_width=True,
+    hide_index=False
+)

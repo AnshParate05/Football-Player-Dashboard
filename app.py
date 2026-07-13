@@ -3,7 +3,7 @@ import streamlit as st
 from utils.data_loader import load_clean_data
 from utils.metrics import dashboard_metrics
 from utils.styles import load_css
-from utils.charts import league_chart
+from utils.charts import league_chart, position_chart
 
 # -----------------
 
@@ -111,4 +111,16 @@ for col, (icon, title, value, desc, color) in zip(
 
 fig = league_chart(filtered_df)
 
-st.plotly_chart(fig,use_container_width=True)
+left, right = st.columns([2, 1])
+
+with left:
+    st.plotly_chart(
+        league_chart(filtered_df),
+        use_container_width=True
+    )
+
+with right:
+    st.plotly_chart(
+        position_chart(filtered_df),
+        use_container_width=True
+    )

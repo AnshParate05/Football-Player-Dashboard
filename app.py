@@ -13,8 +13,6 @@ st.set_page_config(
     layout="wide"
 )
 
-st.markdown(load_css(), unsafe_allow_html=True)
-
 df = load_clean_data()
 
 # ---------------- Sidebar ----------------
@@ -51,6 +49,8 @@ age = st.sidebar.slider(
     )
 )
 
+st.markdown(load_css(), unsafe_allow_html=True)
+
 # ---------------- Apply Filters ----------------
 
 filtered_df = df.copy()
@@ -83,12 +83,29 @@ st.caption("Top 5 European Leagues 2025-26")
 
 # ---------------- KPI ----------------
 
-col1,col2,col3,col4 = st.columns(4)
+col1, col2, col3, col4 = st.columns(4)
 
-col1.metric("Players",metrics["players"])
-col2.metric("Clubs",metrics["clubs"])
-col3.metric("Leagues",metrics["leagues"])
-col4.metric("Goals",metrics["goals"])
+cards = [
+    ("👤", "Players", metrics["players"], "Total Registered Players", "#3B82F6"),
+    ("🏟", "Clubs", metrics["clubs"], "Professional Clubs", "#10B981"),
+    ("🌍", "Leagues", metrics["leagues"], "Top European Leagues", "#8B5CF6"),
+    ("⚽", "Goals", metrics["goals"], "Goals Scored", "#F59E0B"),
+]
+
+for col, (icon, title, value, desc, color) in zip(
+    [col1, col2, col3, col4],
+    cards
+):
+    card_html = f"""
+    <div class="metric-card" style="border-top:5px solid {color};">
+        <div class="metric-title">{icon} {title}</div>
+        <div class="metric-value">{value}</div>
+        <div class="metric-description">{desc}</div>
+    </div>
+    """
+
+    with col:
+        st.markdown(card_html, unsafe_allow_html=True)
 
 # ---------------- Chart ----------------
 

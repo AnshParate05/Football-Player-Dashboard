@@ -1,0 +1,162 @@
+/* ---------------- Main ---------------- */
+
+.block-container{
+    padding-top:1.5rem;
+    padding-bottom:2rem;
+}
+
+/* ---------------- Sidebar ---------------- */
+
+section[data-testid="stSidebar"]{
+    background:#111827;
+    border-right:1px solid rgba(255,255,255,.05);
+}
+
+/* ---------------- Dashboard ---------------- */
+
+.main{
+    background:#0E1117;
+    color:white;
+}
+
+h1,h2,h3,h4,h5{
+    color:white;
+}
+
+/* ---------------- KPI Card ---------------- */
+
+.metric-card{
+
+    background:
+    linear-gradient(
+        135deg,
+        #202632,
+        #181C24
+    );
+
+    border-radius:22px;
+
+    padding:25px;
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    transition:
+    transform .30s ease,
+    box-shadow .30s ease,
+    border .30s ease;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.25);
+
+}
+
+.metric-card:hover{
+
+    transform:translateY(-8px);
+
+    border:1px solid rgba(59,130,246,.35);
+
+    box-shadow:
+        0 20px 40px rgba(59,130,246,.35);
+
+}
+
+.metric-title{
+
+    color:#A0AEC0;
+
+    font-size:19px;
+
+    margin-bottom:15px;
+
+}
+
+.metric-value{
+
+    font-size:44px;
+
+    font-weight:700;
+
+    color:white;
+
+}
+
+.metric-description{
+
+    margin-top:15px;
+
+    color:#8B97A8;
+
+    font-size:14px;
+
+}
+
+/* ---------------- Chart Card ---------------- */
+
+.chart-card{
+
+    background:linear-gradient(
+        135deg,
+        #202632,
+        #181C24
+    );
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    border-radius:22px;
+
+    padding:20px;
+
+    margin-top:10px;
+
+    margin-bottom:20px;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.25);
+
+    transition:0.3s ease;
+
+}
+
+.chart-card:hover{
+
+    border:1px solid #3B82F6;
+
+    box-shadow:
+        0 18px 35px rgba(59,130,246,.18);
+
+}
+
+h2{
+
+    margin-top:15px;
+
+    margin-bottom:20px;
+
+}
+
+div[data-testid="stDataFrame"]{
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+}
+
+hr{
+
+    border-color:rgba(255,255,255,.08);
+
+}
+
+footer{
+
+    visibility:hidden;
+
+}
+
+#MainMenu{
+
+    visibility:hidden;
+
+}

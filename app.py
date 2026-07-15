@@ -1,11 +1,20 @@
 import streamlit as st
 
 from utils.data_loader import load_clean_data
-from utils.metrics import dashboard_metrics, top_goal_scorers
+from utils.metrics import (
+    dashboard_metrics,
+    top_goal_scorers,
+    top_assist_providers
+)
 from utils.styles import load_css
-from utils.charts import league_chart, position_chart
+from utils.charts import (
+    league_chart,
+    position_chart
+)
 
-# -----------------
+# ----------------------------------------------------
+# Page Configuration
+# ----------------------------------------------------
 
 st.set_page_config(
     page_title="Football Analytics Dashboard",
@@ -13,34 +22,44 @@ st.set_page_config(
     layout="wide"
 )
 
-df = load_clean_data()
+# ----------------------------------------------------
+# Load CSS
+# ----------------------------------------------------
 
-# ---------------- Sidebar ----------------
-
-st.sidebar.title("⚙ Dashboard Settings")
-
-theme = st.sidebar.radio(
-    "Theme",
-    ["🌙 Dark", "☀️ Light"]
+st.markdown(
+    load_css(),
+    unsafe_allow_html=True
 )
 
+# ----------------------------------------------------
+# Load Dataset
+# ----------------------------------------------------
+
+df = load_clean_data()
+
+# ----------------------------------------------------
+# Sidebar Filters
+# ----------------------------------------------------
+
+st.sidebar.title("⚽ Analytics Filters")
+
 league = st.sidebar.selectbox(
-    "🌍 League",
-    ["All"] + sorted(df["Comp"].unique().tolist())
+    "🌍 League Filter",
+    ["All"] + sorted(df["Comp"].unique())
 )
 
 club = st.sidebar.selectbox(
-    "🏟 Club",
-    ["All"] + sorted(df["Squad"].unique().tolist())
+    "🏟 Club Filter",
+    ["All"] + sorted(df["Squad"].unique())
 )
 
 position = st.sidebar.selectbox(
-    "⚽ Position",
-    ["All"] + sorted(df["Pos"].unique().tolist())
+    "⚽ Position Filter",
+    ["All"] + sorted(df["Pos"].unique())
 )
 
 age = st.sidebar.slider(
-    "👤 Age",
+    "👤 Age Range",
     min_value=int(df["Age"].min()),
     max_value=int(df["Age"].max()),
     value=(
@@ -49,9 +68,9 @@ age = st.sidebar.slider(
     )
 )
 
-st.markdown(load_css(), unsafe_allow_html=True)
-
-# ---------------- Apply Filters ----------------
+# ----------------------------------------------------
+# Apply Filters
+# ----------------------------------------------------
 
 filtered_df = df.copy()
 
@@ -75,13 +94,25 @@ filtered_df = filtered_df[
     (filtered_df["Age"] <= age[1])
 ]
 
+# ----------------------------------------------------
+# Dashboard Metrics
+# ----------------------------------------------------
+
 metrics = dashboard_metrics(filtered_df)
+
+# ----------------------------------------------------
+# Header
+# ----------------------------------------------------
 
 st.title("⚽ Football Analytics Dashboard")
 
-st.caption("Top 5 European Leagues 2025-26")
+st.caption(
+    "Professional Football Player Analytics • Top 5 European Leagues • Season 2025–26"
+)
 
-# ---------------- KPI ----------------
+# ----------------------------------------------------
+# KPI Cards
+# ----------------------------------------------------
 
 col1, col2, col3, col4 = st.columns(4)
 
@@ -92,47 +123,103 @@ cards = [
     ("⚽", "Goals", metrics["goals"], "Goals Scored", "#F59E0B"),
 ]
 
-for col, (icon, title, value, desc, color) in zip(
+for column, (icon, title, value, desc, color) in zip(
     [col1, col2, col3, col4],
     cards
 ):
-    card_html = f"""
-    <div class="metric-card" style="border-top:5px solid {color};">
-        <div class="metric-title">{icon} {title}</div>
-        <div class="metric-value">{value}</div>
-        <div class="metric-description">{desc}</div>
-    </div>
-    """
 
-    with col:
-        st.markdown(card_html, unsafe_allow_html=True)
+    with column:
 
-# ---------------- Chart ----------------
+        st.markdown(
+            f"""
+<div class="metric-card" style="border-top:5px solid {color};">
+    <div class="metric-title">{icon} {title}</div>
+    <div class="metric-value">{value}</div>
+    <div class="metric-description">{desc}</div>
+</div>
+""",
+            unsafe_allow_html=True
+        )
+# ----------------------------------------------------
+# League Analytics
+# ----------------------------------------------------
 
-fig = league_chart(filtered_df)
+st.markdown("<br>", unsafe_allow_html=True)
+st.markdown("## 📊 League Analytics", unsafe_allow_html=True)
 
 left, right = st.columns([2, 1])
 
 with left:
+
     st.plotly_chart(
-        league_chart(filtered_df),
+    league_chart(filtered_df),
+    use_container_width=True,
+    config={
+        "displayModeBar": False,
+        "responsive": True
+    }
+)
+
+with right:
+
+    st.plotly_chart(
+    position_chart(filtered_df),
+    use_container_width=True,
+    config={
+        "displayModeBar": False,
+        "responsive": True
+    }
+)
+
+# ----------------------------------------------------
+# Player Leaderboards
+# ----------------------------------------------------
+
+st.markdown("<br>", unsafe_allow_html=True)
+st.markdown("## 🏆 Player Leaderboards", unsafe_allow_html=True)
+
+left, right = st.columns(2)
+
+with left:
+
+    st.subheader("🏆 Top 10 Goal Scorers")
+
+    st.dataframe(
+        top_goal_scorers(filtered_df),
         use_container_width=True
     )
 
 with right:
-    st.plotly_chart(
-        position_chart(filtered_df),
+
+    st.subheader("🎯 Top 10 Assist Providers")
+
+    st.dataframe(
+        top_assist_providers(filtered_df),
         use_container_width=True
     )
 
+# ----------------------------------------------------
+# Footer
+# ----------------------------------------------------
+
 st.divider()
 
-st.subheader("🏆 Top 10 Goal Scorers")
+st.markdown(
+    """
+<div style="
+text-align:center;
+color:#9CA3AF;
+font-size:14px;
+padding:10px 0;
+">
 
-top_players = top_goal_scorers(filtered_df)
+⚽ <b>Football Analytics Dashboard</b> |
+Developed by <b>Ansh Parate</b> |
+Version 1.0 |
+FBref 2025–26 Dataset |
+Streamlit • Plotly • Pandas
 
-st.dataframe(
-    top_players,
-    use_container_width=True,
-    hide_index=False
+</div>
+""",
+    unsafe_allow_html=True
 )

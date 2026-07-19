@@ -160,3 +160,29 @@ footer{
     visibility:hidden;
 
 }
+
+/* ---------- Player Analysis Table ---------- */
+
+div[data-testid="stTable"] table{
+
+    width:100%;
+
+    font-size:17px;
+
+}
+
+div[data-testid="stTable"] th{
+
+    font-size:18px;
+
+    font-weight:700;
+
+}
+
+div[data-testid="stTable"] td{
+
+    padding:12px 14px;
+
+    font-size:17px;
+
+}

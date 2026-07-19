@@ -40,7 +40,6 @@ player = st.sidebar.selectbox(
 # ----------------------------------------------------
 
 player_df = df[df["Player"] == player]
-
 player_info = player_df.iloc[0]
 
 # ----------------------------------------------------
@@ -56,49 +55,74 @@ st.caption(
 st.divider()
 
 # ----------------------------------------------------
-# Player Profile
+# Player Profile + Detailed Statistics
 # ----------------------------------------------------
 
-st.subheader("📋 Player Profile")
-
-col1, col2 = st.columns([1, 2])
+col1, col2 = st.columns([1, 1], gap="small")
 
 with col1:
 
+    st.subheader("📋 Player Profile")
+
     st.markdown(
         f"""
-        <div class="metric-card">
+<div class="metric-card">
 
-        <h2 style="margin-bottom:5px;">
-        👤 {player_info['Player']}
-        </h2>
+<h2 style="margin-bottom:20px;">
+👤 {player_info["Player"]}
+</h2>
 
-        <p><b>Club</b><br>{player_info['Squad']}</p>
+<p><b>Club</b><br>{player_info["Squad"]}</p>
 
-        <p><b>League</b><br>{player_info['Comp']}</p>
+<p><b>League</b><br>{player_info["Comp"]}</p>
 
-        <p><b>Position</b><br>{player_info['Pos']}</p>
+<p><b>Position</b><br>{player_info["Pos"]}</p>
 
-        <p><b>Age</b><br>{player_info['Age']}</p>
+<p><b>Age</b><br>{int(player_info["Age"])}</p>
 
-        <p><b>Nationality</b><br>{player_info['Nation']}</p>
+<p><b>Nationality</b><br>{str(player_info["Nation"]).split()[-1]}</p>
 
-        </div>
-        """,
-        unsafe_allow_html=True
+</div>
+""",
+        unsafe_allow_html=True,
     )
 
 with col2:
 
-    st.info(
-        "Select another player from the sidebar to instantly update the profile and statistics."
-    )
+    st.subheader("📋 Detailed Statistics")
 
+    stats = {
+        "Statistic": [
+            "Goals",
+            "Assists",
+            "Minutes Played",
+            "Yellow Cards",
+            "Red Cards",
+            "Age",
+            "Position",
+            "Club",
+            "League",
+        ],
+        "Value": [
+            int(player_info["Gls"]),
+            int(player_info["Ast"]),
+            int(player_info["Min"]),
+            int(player_info["CrdY"]),
+            int(player_info["CrdR"]),
+            int(player_info["Age"]),
+            player_info["Pos"],
+            player_info["Squad"],
+            player_info["Comp"],
+        ],
+    }
+
+    st.table(stats)
 # ----------------------------------------------------
-# Player Performance
+# Season Performance
 # ----------------------------------------------------
 
 st.markdown("<br>", unsafe_allow_html=True)
+
 st.subheader("📊 Season Performance")
 
 col1, col2, col3, col4 = st.columns(4)
@@ -133,65 +157,6 @@ for column, (icon, title, value, color) in zip(
 """,
             unsafe_allow_html=True
         )
-
-# ----------------------------------------------------
-# Detailed Statistics
-# ----------------------------------------------------
-
-st.markdown("<br>", unsafe_allow_html=True)
-st.subheader("📋 Detailed Statistics")
-
-left, right = st.columns([2, 1])
-
-with left:
-
-    stats = {
-        "Statistic": [
-            "Goals",
-            "Assists",
-            "Minutes Played",
-            "Yellow Cards",
-            "Red Cards",
-            "Age",
-            "Position",
-            "Club",
-            "League"
-        ],
-        "Value": [
-            int(player_info["Gls"]),
-            int(player_info["Ast"]),
-            int(player_info["Min"]),
-            int(player_info["CrdY"]),
-            int(player_info["CrdR"]),
-            int(player_info["Age"]),
-            player_info["Pos"],
-            player_info["Squad"],
-            player_info["Comp"]
-        ]
-    }
-
-    st.table(stats)
-
-with right:
-
-    st.subheader("⏱ Minutes Played")
-
-    minutes = int(player_info["Min"])
-
-    max_minutes = 3420
-
-    st.metric(
-        "Minutes",
-        f"{minutes:,}"
-    )
-
-    st.progress(
-        min(minutes / max_minutes, 1.0)
-    )
-
-    st.caption(
-        f"{minutes:,} / {max_minutes:,} possible minutes"
-    )
 
 # ----------------------------------------------------
 # Footer

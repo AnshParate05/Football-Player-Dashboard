@@ -94,6 +94,10 @@ filtered_df = filtered_df[
     (filtered_df["Age"] <= age[1])
 ]
 
+if filtered_df.empty:
+    st.warning("No data available for the selected filters.")
+    st.stop()
+
 # ----------------------------------------------------
 # Dashboard Metrics
 # ----------------------------------------------------
@@ -150,26 +154,24 @@ st.markdown("## 📊 League Analytics", unsafe_allow_html=True)
 left, right = st.columns([2, 1])
 
 with left:
-
     st.plotly_chart(
-    league_chart(filtered_df),
-    use_container_width=True,
-    config={
-        "displayModeBar": False,
-        "responsive": True
-    }
-)
+        league_chart(filtered_df),
+        width="stretch",
+        config={
+            "displayModeBar": False,
+            "responsive": True,
+        },
+    )
 
 with right:
-
     st.plotly_chart(
-    position_chart(filtered_df),
-    use_container_width=True,
-    config={
-        "displayModeBar": False,
-        "responsive": True
-    }
-)
+        position_chart(filtered_df),
+        width="stretch",
+        config={
+            "displayModeBar": False,
+            "responsive": True,
+        },
+    )
 
 # ----------------------------------------------------
 # Player Leaderboards
@@ -181,12 +183,12 @@ st.markdown("## 🏆 Player Leaderboards", unsafe_allow_html=True)
 left, right = st.columns(2)
 
 with left:
-
     st.subheader("🏆 Top 10 Goal Scorers")
 
     st.dataframe(
         top_goal_scorers(filtered_df),
-        use_container_width=True
+        width="stretch",
+        hide_index=True,
     )
 
 with right:
@@ -195,7 +197,8 @@ with right:
 
     st.dataframe(
         top_assist_providers(filtered_df),
-        use_container_width=True
+        width="stretch",
+        hide_index=True
     )
 
 # ----------------------------------------------------

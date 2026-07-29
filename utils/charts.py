@@ -21,10 +21,9 @@ def league_chart(df):
         color_continuous_scale="Blues",
         text="Players",
         title="League Player Distribution",
-        
     )
     fig.update_traces(
-    textposition="outside"
+        textposition="outside"
     )
 
     fig.update_layout(

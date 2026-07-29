@@ -1,5 +1,4 @@
 import streamlit as st
-
 from utils.data_loader import load_clean_data
 from utils.styles import load_css
 
@@ -39,8 +38,7 @@ player = st.sidebar.selectbox(
 # Filter Player
 # ----------------------------------------------------
 
-player_df = df[df["Player"] == player]
-player_info = player_df.iloc[0]
+player_info = df[df["Player"] == player].iloc[0]
 
 # ----------------------------------------------------
 # Header
@@ -136,11 +134,9 @@ cards = [
 
 for column, (icon, title, value, color) in zip(
     [col1, col2, col3, col4],
-    cards
+    cards,
 ):
-
     with column:
-
         st.markdown(
             f"""
 <div class="metric-card" style="border-top:5px solid {color};">
@@ -155,8 +151,31 @@ for column, (icon, title, value, color) in zip(
 
 </div>
 """,
-            unsafe_allow_html=True
+            unsafe_allow_html=True,
         )
+
+# ----------------------------------------------------
+# Performance Summary
+# ----------------------------------------------------
+
+st.markdown("<br>", unsafe_allow_html=True)
+
+if int(player_info["Gls"]) == 0 and int(player_info["Ast"]) == 0:
+    st.info("⚠️ This player has not recorded any goals or assists this season.")
+
+elif int(player_info["Gls"]) == 0:
+    st.info("⚽ This player has not scored any goals this season.")
+
+elif int(player_info["Ast"]) == 0:
+    st.info("🎯 This player has not provided any assists this season.")
+
+else:
+    st.success(
+        f"✅ This player has contributed "
+        f"{int(player_info['Gls'])} goals and "
+        f"{int(player_info['Ast'])} assists this season."
+    )
+
 
 # ----------------------------------------------------
 # Footer

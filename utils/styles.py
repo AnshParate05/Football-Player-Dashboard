@@ -1,5 +1,6 @@
 from pathlib import Path
 
+
 def load_css():
     css_file = Path("assets/styles.css")   # <-- plural
 

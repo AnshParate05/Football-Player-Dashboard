@@ -76,7 +76,7 @@ st.divider()
 # ----------------------------------------------------
 
 st.markdown(
-f"""
+    f"""
 <div class="club-banner">
 
 <div class="club-banner-row">
@@ -93,38 +93,37 @@ f"""
 
 </div>
 """,
-unsafe_allow_html=True
+    unsafe_allow_html=True,
 )
 
 st.markdown("## 📊 Club Overview")
 
-goal_per_player = round(goals / players,2) if players else 0
+goal_per_player = round(goals / players, 2) if players else 0
 
 cards = [
     ("⚽ Goals", goals),
     ("🎯 Assists", assists),
     ("👥 Players", players),
-    ("📈 Goals / Player", goal_per_player)
+    ("📈 Goals / Player", goal_per_player),
 ]
 
 cols = st.columns(4)
 
-for col,(title,value) in zip(cols,cards):
+for col, (title, value) in zip(cols, cards):
 
     with col:
 
         st.markdown(
-f"""
+            f"""
 <div class="metric-card">
 
-<h5>{title}</h5>
-<h3>{value}</h3>
+    <h5>{title}</h5>
+    <h3>{value}</h3>
 
 </div>
 """,
-unsafe_allow_html=True
-)
-
+            unsafe_allow_html=True,
+        )
 st.markdown("<br><br>", unsafe_allow_html=True)
 
 st.subheader("⚔️ Player Comparison")
@@ -157,21 +156,21 @@ comparison_df = {
         "Age",
         "Goals",
         "Assists",
-        "Minutes"
+        "Minutes",
     ],
     player1: [
         p1["Pos"],
         p1["Age"],
         p1["Gls"],
         p1["Ast"],
-        f'{int(p1["Min"]):,}'
+        f'{int(p1["Min"]):,}',
     ],
     player2: [
         p2["Pos"],
         p2["Age"],
         p2["Gls"],
         p2["Ast"],
-        f'{int(p2["Min"]):,}'
+        f'{int(p2["Min"]):,}',
     ]
 }
 
@@ -181,7 +180,7 @@ st.divider()
 
 st.markdown("## 📊 Team Leaders")
 
-chart1,chart2 = st.columns(2)
+chart1, chart2 = st.columns(2)
 
 with chart1:
 

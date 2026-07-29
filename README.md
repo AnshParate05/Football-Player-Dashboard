@@ -12,6 +12,28 @@ The dashboard provides interactive visualizations, advanced filtering, performan
 
 ---
 
+## 🚀 Live Demo
+
+🌐 **Live Application:**  
+https://football-player-dashboard-n9av8ypwzpeshny2e5uu6p.streamlit.app/
+
+---
+
+## 📚 Table of Contents
+
+- [About the Project](#-about-the-project)
+- [Features](#-features)
+- [Project Structure](#-project-structure)
+- [Dataset](#-dataset)
+- [Technologies Used](#-technologies-used)
+- [Installation](#-installation)
+- [Dashboard Modules](#-dashboard-modules)
+- [Future Enhancements](#-future-enhancements)
+- [Author](#-author)
+- [License](#-license)
+
+---
+
 ## 🎯 About the Project
 
 Football generates vast amounts of player and team statistics every season. This project provides an interactive analytics dashboard that helps users explore football performance data through dynamic filters, visualizations, and comparative analysis. It demonstrates practical data analytics, visualization, and dashboard development using Python and Streamlit.
@@ -131,6 +153,7 @@ The dataset includes:
 - 📂 CSV & Excel Export
 - 🎨 Custom CSS Styling
 - ✅ Flake8 Compliant
+- 🌐 Live Streamlit Deployment
 
 ---
 

@@ -109,19 +109,16 @@ cards = [
 
 cols = st.columns(4)
 
-for col, (title, value) in zip(cols, cards):
-
+for i, (col, (title, value)) in enumerate(zip(cols, cards)):
     with col:
 
         st.markdown(
             f"""
-<div class="metric-card">
-
-    <h5>{title}</h5>
-    <h3>{value}</h3>
-
-</div>
-""",
+            <div class="metric-card">
+                <h5>{title}</h5>
+                <h3>{value}</h3>
+            </div>
+            """,
             unsafe_allow_html=True,
         )
 st.markdown("<br><br>", unsafe_allow_html=True)
